@@ -52,6 +52,3 @@ select
 -- supplies to Northwind
 
 
-
-
-select products from ProductID, ProductName, UnitPrice;
