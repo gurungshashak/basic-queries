@@ -37,13 +37,13 @@ ORDER BY p.ProductName;
 -- products? HINT: Find the max price in a subquery and then use that in
 -- your more complex query that joins products with categories.
 
-SELECT max(UnitPrice) From products;
+ SELECT max(UnitPrice) From products;
 
-SELECT ProductName, CategoryName
-FROM products AS p
-JOIN categories AS c
- ON p.ProductID = c.CategoryID
-WHERE UnitPrice = (SELECT max(UnitPrice) From products); 
+ SELECT p.ProductName, c.CategoryName
+ FROM products AS p
+ JOIN categories AS c
+  ON p.CategoryID = c.CategoryID
+ WHERE p.UnitPrice = (SELECT max(UnitPrice) From products); 
 
 
 
@@ -59,8 +59,16 @@ Where o.ShipCountry = "Germany";
 
 -- 6. List the order id, order date, ship name, ship address of all orders that
 -- ordered "Sasquatch Ale"?  
-SELECT OrderID, OrderDate, ShipName, ShipAddress
-FROM ordersproducts
+
+ SELECT o.OrderID, o.OrderDate, o.ShipName, o.ShipAddress
+ FROM orders AS o
+ JOIN `order details` AS od
+   ON o.OrderID = od.OrderID
+ JOIN products AS p
+   ON od.ProductID = p.ProductID
+ WHERE p.ProductName =  'Sasquatch Ale'
+ ORDER BY o.OrderID;
+
 
    
 
